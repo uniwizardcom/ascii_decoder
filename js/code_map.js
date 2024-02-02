@@ -18,6 +18,10 @@ function CodeMap(confObj) {
                 let tr = tthis.createNewTableRow();
                 tthis.createButtonDelete(tr);
                 tthis.createButtonSwitch(tr);
+
+                $(tr.parentNode).animate({
+                    scrollTop: $(tr.parentNode).height() + $(tr).height() + tr.parentNode.scrollHeight
+                }, 1000);
             });
         },
 
@@ -45,7 +49,7 @@ function CodeMap(confObj) {
         renumerateTableIndexes: function(t) {
             var index = 1;
 
-            $('table.code-map '+t+' tr').each(function() {
+            $('.code-map table '+t+' tr').each(function() {
                 $(this).find('th.index').html(index);
                 $(this).find('input[name_org="value_code[__index__]"]').attr('name',
                     $(this).find('input[name_org="value_code[__index__]"]').attr('name_org').replace('__index__', index)
@@ -66,10 +70,31 @@ function CodeMap(confObj) {
                 '<td><input type="text" name_org="value_ascii[__index__]" name="value_ascii[__index__]" class="text-centered" placeholder="prosze uzupełnić" /></td>' +
                 '<td class="buttons button-delete"></td>';
 
-            $('table.code-map tbody').append(tr);
+            $('.code-map table tbody').append(tr);
             this.renumerateTableIndexes('tbody');
 
             return tr;
+        },
+
+        getDataFromForm: function() {
+            let results = {};
+            const reg = /(.*?)\[(\d+)\]/,
+                form = $('form')[0];
+
+            for(key in form.elements) {
+                let values = key.match(reg);
+                if(values) {
+                    if (!(values[1] in results)) {
+                        results[values[1]] = {};
+                    }
+                    if (!(values[2] in results[values[1]])) {
+                        results[values[1]][values[2]] = {};
+                    }
+                    results[values[1]][values[2]] = form.elements[key].value;
+                }
+            }
+
+            return results;
         }
     };
 
@@ -79,18 +104,36 @@ function CodeMap(confObj) {
 
             if(('charsMap' in confObj) && (Object.prototype.toString.call(confObj.charsMap) === '[object Object]')) {
                 for(code in confObj.charsMap) {
-                    this.addCharsPairToMap(code, confObj.charsMap[code]);
+                    this.addCodeAsciiToMap(code, confObj.charsMap[code]);
                 }
             }
         },
 
-        addCharsPairToMap: function(code, ascii) {
+        addCodeAsciiToMap: function(code, ascii) {
             let tr = privateObject.createNewTableRow();
             privateObject.createButtonDelete(tr);
             privateObject.createButtonSwitch(tr);
 
             $(tr).find('input[name_org="value_code[__index__]"]').val(code);
             $(tr).find('input[name_org="value_ascii[__index__]"]').val(ascii);
+        },
+
+        getCodeAsciiMap: function() {
+            let res = {}, dataFromForm = privateObject.getDataFromForm();
+            for(let index in dataFromForm.value_code) {
+                res[dataFromForm.value_code[index]] = dataFromForm.value_ascii[index];
+            }
+
+            return res;
+        },
+
+        getAsciiCodeMap: function() {
+            let res = {}, dataFromForm = privateObject.getDataFromForm();
+            for(let index in dataFromForm.value_ascii) {
+                res[dataFromForm.value_ascii[index]] = dataFromForm.value_code[index];
+            }
+
+            return res;
         }
     };
 

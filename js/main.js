@@ -6,7 +6,7 @@ $(document).ready(function(){
             ')': 'b',
             '"': 'c',
             '(': 'd',
-            '#': 'e',
+            '£': 'e',
             '*': 'f',
             '%': 'g',
             '&': 'h',
@@ -31,7 +31,31 @@ $(document).ready(function(){
         }
     });
     codeMap.run();
-    codeMap.addCharsPairToMap('m', 'x');
-    codeMap.addCharsPairToMap('n', 'y');
-    codeMap.addCharsPairToMap('o', 'z');
+    codeMap.addCodeAsciiToMap('m', 'x');
+    codeMap.addCodeAsciiToMap('n', 'y');
+    codeMap.addCodeAsciiToMap('o', 'z');
+
+    $('.coder button.action-decode').bind('click', function() {
+        let encoder = new Encoder({
+            content: $('.coder textarea[name="value_code"]').val(),
+            charsMap: codeMap.getCodeAsciiMap()
+        });
+
+        let result = encoder.run();
+        if(result !== null) {
+            $('.coder textarea[name="value_ascii"]').val(result);
+        }
+    });
+
+    $('.coder button.action-encode').bind('click', function() {
+        let encoder = new Encoder({
+            content: $('.coder textarea[name="value_ascii"]').val(),
+            charsMap: codeMap.getAsciiCodeMap()
+        });
+
+        let result = encoder.run();
+        if(result !== null) {
+            $('.coder textarea[name="value_code"]').val(result);
+        }
+    });
 });

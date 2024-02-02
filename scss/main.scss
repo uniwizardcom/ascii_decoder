@@ -14,6 +14,84 @@ fieldset {
     }
 }
 
+.code-map {
+    width: 100%;
+}
+
 .text-centered {
     text-align: center;
 }
+
+.scroolbar-container {
+    overflow: auto;
+}
+
+table.scroolbar-container {
+
+}
+
+table.scroolbar-container thead,
+table.scroolbar-container tfoot,
+table.scroolbar-container tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+}
+
+table.scroolbar-container thead,
+table.scroolbar-container tfoot {
+    width: calc( 100% - 1em );/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+table.scroolbar-container tbody {
+    display: block;
+    width: 100%;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody {
+    height: 300px;
+    overflow: auto;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td:nth-child(1) {
+    width: 10%;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td:nth-child(2) {
+    width: 30%;
+}
+
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td:nth-child(3) {
+    width: 10%;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td:nth-child(4) {
+    width: 30%;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td:nth-child(5) {
+    width: 20%;
+}
+
+table.scroolbar-container.scroolbar-container-1 tbody tr td input {
+    width: 90%;
+}
+
+.coder {
+    .row {
+        width: 100%;
+
+        .col {
+            textarea {
+                width: 100%;
+                resize: none;
+            }
+        }
+
+        .col-2 {
+            text-align: center;
+        }
+    }
+}
+

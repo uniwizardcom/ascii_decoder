@@ -6,10 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="scss/main.css">
   <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-  <script type="application/javascript" src="js/jquery-3.7.1.min.js"></script>
   <script type="application/javascript" src="bootstrap/js/bootstrap.js"></script>
+  <script type="application/javascript" src="js/jquery-3.7.1.min.js"></script>
+  <script type="application/javascript" src="js/main.js"></script>
 </head>
 <body>
-  <h1>Hello, world!</h1>
+  <h1>Ascii Coder (Decoder/Encoder)</h1>
+
+  <fieldset>
+    <legend>Code map of characters</legend>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">&nbsp;</th>
+        <th scope="col">Last</th>
+        <th scope="col" class="buttons button-new"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <th scope="row">&nbsp;</th>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="buttons button-new"></td>
+      </tr>
+      </tfoot>
+      <tbody></tbody>
+    </table>
+  </fieldset>
 </body>
 </html>

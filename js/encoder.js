@@ -1,6 +1,6 @@
 
 String.prototype.replaceAt = function(index, replacement) {
-    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+    return this.substring(0, index) + replacement + this.substring(index + Math.max(replacement.length, 1));
 }
 
 function Encoder(confObj) {
@@ -19,12 +19,16 @@ function Encoder(confObj) {
 
     var publicDynamicObject = {
         run: function () {
-            let result = privateObject.content,
+            let j=0, result = privateObject.content,
                 contLen = privateObject.content.length;
 
             for(let i=0; i<contLen; i++) {
                 if(privateObject.content[i] in privateObject.charsMap) {
-                    result = result.replaceAt(i, privateObject.charsMap[privateObject.content[i]]);
+                    result = result.replaceAt(j, privateObject.charsMap[privateObject.content[i]]);
+                    j += privateObject.charsMap[privateObject.content[i]].length;
+                } else {
+                    result = result.replaceAt(j, privateObject.content[i]);
+                    j++;
                 }
             }
 
